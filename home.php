@@ -14,7 +14,8 @@ get_header(); ?>
             <div class="locator">
                 <form>
                     <div class="form-fields flex flex-justify-between">
-                        <input type="text" name="location" placeholder="<?php _e( 'Search for the location you want!', 'hounter' ); ?>">
+                        <input type="text" name="location"
+                            placeholder="<?php _e( 'Search for the location you want!', 'hounter' ); ?>">
                         <button type="submit"><?php _e( 'Search', ''); ?></button>
                     </div>
                 </form><!-- end form -->
@@ -73,9 +74,9 @@ get_header(); ?>
                     <h2><?php _e( 'Featured House', 'hounter' ); ?></h2>
                 </div>
                 <div class="featured-property-categories">
-                    <a class="button">House</a>
-                    <a class="button">Villa</a>
-                    <a class="button">Apartment</a>
+                    <a class="button cat-house active">House</a>
+                    <a class="button cat-villa">Villa</a>
+                    <a class="button cat-apartment">Apartment</a>
                 </div>
                 <div class="featured-property-nav">
                     <a href="javascript://" class="button button-left">
@@ -87,6 +88,84 @@ get_header(); ?>
                 </div>
             </div>
         </div><!-- end .section-header -->
+
+        <div class="featured-carousel owl-carousel">
+            <article class="featured-property">
+                <div class="post-thumbnail">
+                    <div class="property-tag popular">
+                        <span>Popular</span>
+                    </div>
+                </div>
+                <h2 class="post-title">Roselands House</h2>
+                <div class="price"><span>$ 35.000.000</span></div>
+                <div class="post-meta">
+                    <div class="author flex flex-align-center">
+                        <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
+                        <div>
+                            <p>Dianne Russel</p>
+                            <cite>Manager Director</cite>
+                        </div>
+                    </div><!-- .author -->
+                </div>
+            </article>
+
+            <article class="featured-property">
+                <div class="post-thumbnail">
+                    <div class="property-tag newhouse">
+                        <span>New House</span>
+                    </div>
+                </div>
+                <h2 class="post-title">Woodlandside</h2>
+                <div class="price"><span>$ 35.000.000</span></div>
+                <div class="post-meta">
+                    <div class="author flex flex-align-center">
+                        <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
+                        <div>
+                            <p>Dianne Russel</p>
+                            <cite>Manager Director</cite>
+                        </div>
+                    </div><!-- .author -->
+                </div>
+            </article>
+
+            <article class="featured-property">
+                <div class="post-thumbnail">
+                    <div class="property-tag best-deals">
+                        <span>Best Deals</span>
+                    </div>
+                </div>
+                <h2 class="post-title">The Old Lighthouse</h2>
+                <div class="price"><span>$ 35.000.000</span></div>
+                <div class="post-meta">
+                    <div class="author flex flex-align-center">
+                        <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
+                        <div>
+                            <p>Dianne Russel</p>
+                            <cite>Manager Director</cite>
+                        </div>
+                    </div><!-- .author -->
+                </div>
+            </article>
+
+            <article class="featured-property">
+                <div class="post-thumbnail">
+                    <div class="property-tag best-deals">
+                        <span>Best Deals</span>
+                    </div>
+                </div>
+                <h2 class="post-title">Cosmo's House</h2>
+                <div class="price"><span>$ 35.000.000</span></div>
+                <div class="post-meta">
+                    <div class="author flex flex-align-center">
+                        <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
+                        <div>
+                            <p>Dianne Russel</p>
+                            <cite>Manager Director</cite>
+                        </div>
+                    </div><!-- .author -->
+                </div>
+            </article>
+        </div><!-- end .featured-carousel -->
     </div>
 </section>
 
@@ -180,7 +259,8 @@ get_header(); ?>
     <div class="container">
         <div class="section-header text-center">
             <div class="subtitle title-top-line">
-                <span><?php _e( 'See tips and trick from our partnership', 'hounter' ); ?></span></div>
+                <span><?php _e( 'See tips and trick from our partnership', 'hounter' ); ?></span>
+            </div>
             <h2 class="text-center"><?php _e( 'Find out more about <br/>selling and buying homes', 'hounter' ); ?></h2>
             <a href="#" class="button"><?php _e( 'More Article', 'hounter' ); ?></a>
         </div><!-- end .section-header -->
@@ -197,42 +277,45 @@ get_header(); ?>
             <?php $i = 1; while( $blog_query->have_posts() ) : $blog_query->the_post(); ?>
 
             <?php if ( $i == 1 ) : ?>
-                <div class="blog-loop-left">
-            <?php endif; ?>
+            <div class="blog-loop-left">
+                <?php endif; ?>
 
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <div class="post-thumbnail"></div>
 
                     <?php if ( $i > 1 ) : ?><div class="post-content"><?php endif; ?>
 
-                    <header class="post-header">
-                        <div class="author flex flex-align-center">
-                            <?php echo get_avatar( get_the_author_meta( 'ID' ), 32 ); ?>
-                            <span><?php echo get_the_author_meta( 'display_name' ); ?></span>
+                        <header class="post-header">
+                            <div class="author flex flex-align-center">
+                                <?php echo get_avatar( get_the_author_meta( 'ID' ), 32 ); ?>
+                                <span><?php echo get_the_author_meta( 'display_name' ); ?></span>
+                            </div>
+                            <?php the_title( sprintf( '<h2 class="post-title"><a href="%s" title="%s">', get_permalink(), get_the_title() ), '</a></h2>' ); ?>
+                        </header>
+                        <div class="post-excerpt"><?php the_excerpt(); ?></div>
+                        <div class="post-meta">
+                            <div class="meta-minread">
+                                <?php printf( __( '%s min read', 'hounter' ), hounter_post_minread( get_the_ID() ) ); ?>
+                            </div>
+                            <div class="meta-date"><?php echo get_the_date( 'j M Y', get_the_ID() ); ?></div>
                         </div>
-                        <?php the_title( sprintf( '<h2 class="post-title"><a href="%s" title="%s">', get_permalink(), get_the_title() ), '</a></h2>' ); ?>
-                    </header>
-                    <div class="post-excerpt"><?php the_excerpt(); ?></div>
-                    <div class="post-meta">
-                        <div class="meta-minread"><?php printf( __( '%s min read', 'hounter' ), hounter_post_minread( get_the_ID() ) ); ?></div>
-                        <div class="meta-date"><?php echo get_the_date( 'j M Y', get_the_ID() ); ?></div>
-                    </div>
 
-                    <?php if ( $i > 1 ) : ?></div><?php endif; ?>
+                        <?php if ( $i > 1 ) : ?>
+                    </div><?php endif; ?>
 
                 </article><!-- end #post-<?php the_ID(); ?> -->
 
-            <?php if ( $i == 1 ) : ?>
-                </div><!-- end .blog-loop-left -->
-                <?php if ( $blog_query->found_posts > 1 ) : ?>
-                <div class="blog-loop-right">
+                <?php if ( $i == 1 ) : ?>
+            </div><!-- end .blog-loop-left -->
+            <?php if ( $blog_query->found_posts > 1 ) : ?>
+            <div class="blog-loop-right">
                 <?php endif; ?>
-            <?php endif; ?>
+                <?php endif; ?>
 
                 <?php $i++; endwhile; ?>
 
-            <?php if ( $blog_query->found_posts > 1 ) : ?>
-                </div><!-- end blog-loop-right -->
+                <?php if ( $blog_query->found_posts > 1 ) : ?>
+            </div><!-- end blog-loop-right -->
             <?php endif; ?>
 
             <?php endif; ?>
