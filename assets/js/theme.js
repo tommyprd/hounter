@@ -8,6 +8,7 @@ jQuery(document).ready(function ($) {
         items: 4,
         loop: true,
         margin: 40,
+        autoplay: true,
         autoWidth: true,
         responsive: {
             600: {
@@ -35,6 +36,7 @@ jQuery(document).ready(function ($) {
         loop: true,
         margin: 56,
         autoWidth: true,
+        autoplay: true,
         responsive: {
             600: {
                 items: 3

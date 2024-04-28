@@ -38,7 +38,7 @@ get_header(); ?>
                 <div class="img"></div>
                 <div>
                     <p><b>56 Houses</b></p>
-                    <span>Sold Monthly</span>
+                    <span><?php _e( 'Sold Monthly', 'hounter' ); ?></span>
                 </div>
             </div>
             <div class="flex flex-align-center">
@@ -50,14 +50,14 @@ get_header(); ?>
                     </div>
                     <div>
                         <p><b>1K+ People</b></p>
-                        <span>Successfully Getting Home</span>
+                        <span><?php _e( 'Successfully Getting Home', 'hounter' ); ?></span>
                     </div>
                 </div>
                 <div class="stats">
                     <div class="img"></div>
                     <div>
                         <p><b>4K+</b></p>
-                        <span>People Looking for New Homes</span>
+                        <span><?php _e( 'People Looking for New Homes', 'hounter' ); ?></span>
                     </div>
                 </div>
             </div>
@@ -74,9 +74,18 @@ get_header(); ?>
                     <h2><?php _e( 'Featured House', 'hounter' ); ?></h2>
                 </div>
                 <div class="featured-property-categories">
-                    <a class="button cat-house active">House</a>
-                    <a class="button cat-villa">Villa</a>
-                    <a class="button cat-apartment">Apartment</a>
+                    <a class="button cat-house active">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icon_house_active.svg"/>
+                        <span>House</span>
+                    </a>
+                    <a class="button cat-villa">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icon_villa.svg"/>
+                        <span>Villa</span>
+                    </a>
+                    <a class="button cat-apartment">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icon_apartment.svg"/>
+                        <span>Apartment</span>
+                    </a>
                 </div>
                 <div class="featured-property-nav">
                     <a href="javascript://" class="button button-left">
@@ -89,14 +98,28 @@ get_header(); ?>
             </div>
         </div><!-- end .section-header -->
 
+        <?php
+        $property_args = [
+            'post_type'         => 'property',
+            'post_status'       => 'publish',
+            'posts_per_page'    => 5
+            // more args like meta query etc
+        ];
+        $pq = new WP_Query( $property_args ); ?>
+
+        <?php if ( $pq->have_posts() ) : ?>
+
         <div class="featured-carousel owl-carousel">
-            <article class="featured-property">
-                <div class="post-thumbnail">
+            <?php while ( $pq->have_posts() ) : $pq->the_post(); 
+                $thumb = wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' );
+            ?>
+            <article id="property-<?php the_ID(); ?>" <?php post_class( ['featured-property'] ); ?>>
+                <div class="post-thumbnail" style="background-image: url(<?php echo $thumb; ?>);">
                     <div class="property-tag popular">
                         <span>Popular</span>
                     </div>
                 </div>
-                <h2 class="post-title">Roselands House</h2>
+                <?php the_title( '<h2 class="post-title">', '</h2>' ); ?>
                 <div class="price"><span>$ 35.000.000</span></div>
                 <div class="post-meta">
                     <div class="author flex flex-align-center">
@@ -108,64 +131,11 @@ get_header(); ?>
                     </div><!-- .author -->
                 </div>
             </article>
-
-            <article class="featured-property">
-                <div class="post-thumbnail">
-                    <div class="property-tag newhouse">
-                        <span>New House</span>
-                    </div>
-                </div>
-                <h2 class="post-title">Woodlandside</h2>
-                <div class="price"><span>$ 35.000.000</span></div>
-                <div class="post-meta">
-                    <div class="author flex flex-align-center">
-                        <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
-                        <div>
-                            <p>Dianne Russel</p>
-                            <cite>Manager Director</cite>
-                        </div>
-                    </div><!-- .author -->
-                </div>
-            </article>
-
-            <article class="featured-property">
-                <div class="post-thumbnail">
-                    <div class="property-tag best-deals">
-                        <span>Best Deals</span>
-                    </div>
-                </div>
-                <h2 class="post-title">The Old Lighthouse</h2>
-                <div class="price"><span>$ 35.000.000</span></div>
-                <div class="post-meta">
-                    <div class="author flex flex-align-center">
-                        <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
-                        <div>
-                            <p>Dianne Russel</p>
-                            <cite>Manager Director</cite>
-                        </div>
-                    </div><!-- .author -->
-                </div>
-            </article>
-
-            <article class="featured-property">
-                <div class="post-thumbnail">
-                    <div class="property-tag best-deals">
-                        <span>Best Deals</span>
-                    </div>
-                </div>
-                <h2 class="post-title">Cosmo's House</h2>
-                <div class="price"><span>$ 35.000.000</span></div>
-                <div class="post-meta">
-                    <div class="author flex flex-align-center">
-                        <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
-                        <div>
-                            <p>Dianne Russel</p>
-                            <cite>Manager Director</cite>
-                        </div>
-                    </div><!-- .author -->
-                </div>
-            </article>
+            <?php endwhile; ?>
         </div><!-- end .featured-carousel -->
+
+        <?php endif; wp_reset_query(); wp_reset_postdata(); ?>
+
     </div>
 </section>
 
@@ -228,9 +198,11 @@ get_header(); ?>
                 ];
                 $review_query = new WP_Query( $review_args );
                 if ( $review_query->have_posts() ) : ?>
-            <?php while ( $review_query->have_posts() ) : $review_query->the_post(); ?>
+            <?php while ( $review_query->have_posts() ) : $review_query->the_post(); 
+                $thumb = wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' );
+            ?>
             <article id="review-<?php the_ID(); ?>" <?php post_class( array( 'swiper-slide', 'review-slide' ) ); ?>>
-                <div class="review-thumbnail"></div>
+                <div class="review-thumbnail" style="background-image: url(<?php echo $thumb; ?>);"></div>
                 <div class="review-content">
                     <?php the_title( '<h3 class="review-title">', '</h3>' ); ?>
                     <?php the_content(); ?>
@@ -274,14 +246,16 @@ get_header(); ?>
                 $blog_query = new WP_Query( $blog_args );
                 if ( $blog_query->have_posts() ) : ?>
 
-            <?php $i = 1; while( $blog_query->have_posts() ) : $blog_query->the_post(); ?>
+            <?php $i = 1; while( $blog_query->have_posts() ) : $blog_query->the_post(); 
+                $thumb = wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' );
+            ?>
 
             <?php if ( $i == 1 ) : ?>
             <div class="blog-loop-left">
                 <?php endif; ?>
 
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                    <div class="post-thumbnail"></div>
+                    <div class="post-thumbnail" style="background-image: url(<?php echo $thumb; ?>);"></div>
 
                     <?php if ( $i > 1 ) : ?><div class="post-content"><?php endif; ?>
 

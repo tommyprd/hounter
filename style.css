@@ -16,6 +16,7 @@ body {
     list-style: 24px;
     color: #626687;
     background-color: #fff;
+    overflow-x: hidden;
 }
 
 div,
@@ -312,12 +313,20 @@ h6 {
 
 .featured-property-categories a {
     margin: 0 28px 0 0;
+    background-color: #D1FAE5;
+    color: #10B981;
+    border: 1px solid #D1FAE5
 }
 
 .featured-property-categories a:not(.active) {
     background-color: #fff;
     color: #888B97;
     border: 1px solid #888B97
+}
+
+.featured-property-categories a img {
+    position: relative;
+    top: 5px;
 }
 
 .featured-property .post-title {
@@ -336,6 +345,12 @@ h6 {
     color: #0E1735;
     margin-bottom: 5px;
     ;
+}
+
+.post-thumbnail {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .property-tag {
@@ -481,6 +496,9 @@ h6 {
     margin-bottom: -144px;
     background-color: #eee;
     border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .review-content {
@@ -519,6 +537,11 @@ h6 {
     display: block;
     margin-right: 16px;
     background: url('assets/images/icon_star.svg') no-repeat center/contain;
+}
+
+#recent-posts {
+    background: url('assets/images/img_blur_blog.png') no-repeat left top;
+    background-size: 30%;
 }
 
 .blog-loop {
@@ -597,9 +620,33 @@ h6 {
 }
 
 .call-to-action {
+    position: relative;
     border-radius: 32px;
     background: url('assets/images/bg-cta.jpg') no-repeat center/cover;
     padding: 60px;
+}
+
+.call-to-action:before,
+.call-to-action:after {
+    position: absolute;
+}
+
+.call-to-action:before {
+    content: "";
+    width: 205px;
+    height: 194px;
+    top: 40px;
+    left: 40px;
+    background: url('assets/images/img_cta_left.png') no-repeat center/cover;
+}
+
+.call-to-action:after {
+    content: "";
+    width: 197px;
+    height: 208px;
+    top: 40px;
+    right: 40px;
+    background: url('assets/images/img_cta_right.png') no-repeat center/contain;
 }
 
 .call-to-action h2 {
@@ -619,6 +666,8 @@ h6 {
     padding: 60px 0 120px;
     font-size: 14px;
     color: #888B97;
+    background: url('assets/images/img_blur_footer.png') no-repeat bottom right;
+    background-size: contain;
 }
 
 #site-footer .container>.flex {
